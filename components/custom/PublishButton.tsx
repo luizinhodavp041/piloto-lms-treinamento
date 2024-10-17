@@ -33,9 +33,11 @@ const PublishButton = ({
 
     try {
       setIsLoading(true);
-      isPublished
-        ? await axios.post(`${url}/unpublish`)
-        : await axios.post(`${url}/publish`);
+      if (isPublished) {
+        await axios.post(`${url}/unpublish`);
+      } else {
+        await axios.post(`${url}/publish`);
+      }
 
       toast.success(`${page} ${isPublished ? "unpublished" : "published"}`);
       router.refresh();

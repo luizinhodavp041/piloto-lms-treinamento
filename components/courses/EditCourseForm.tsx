@@ -22,7 +22,7 @@ import Link from "next/link";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { Loader2, Trash } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import Delete from "../custom/Delete";
 import PublishButton from "../custom/PublishButton";
 
