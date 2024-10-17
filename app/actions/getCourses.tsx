@@ -1,10 +1,12 @@
-import { db } from "@/lib/db"
-import { Course } from "@prisma/client"
+import { db } from "@/lib/db";
+import { Course } from "@prisma/client";
 
-const getCoursesByCategory = async (categoryId: string | null): Promise<Course[]> => {
+const getCoursesByCategory = async (
+  categoryId: string | null
+): Promise<Course[]> => {
   const whereClause: any = {
     ...(categoryId ? { categoryId, isPublished: true } : { isPublished: true }),
-  }
+  };
   const courses = await db.course.findMany({
     where: whereClause,
     include: {
@@ -14,15 +16,15 @@ const getCoursesByCategory = async (categoryId: string | null): Promise<Course[]
       sections: {
         where: {
           isPublished: true,
-        }
+        },
       },
     },
     orderBy: {
       createdAt: "desc",
     },
-  })
+  });
 
-  return courses
-}
+  return courses;
+};
 
-export default getCoursesByCategory
+export default getCoursesByCategory;

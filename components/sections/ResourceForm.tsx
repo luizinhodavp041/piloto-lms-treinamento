@@ -24,7 +24,7 @@ import FileUpload from "@/components/custom/FileUpload";
 
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: "Nome é obrigatório e com no mínimo 2 caracteres",
+    message: "Name is required and must be at least 2 characters long",
   }),
   fileUrl: z.string().min(1, {
     message: "File is required",
@@ -57,7 +57,7 @@ const ResourceForm = ({ section, courseId }: ResourceFormProps) => {
         `/api/courses/${courseId}/sections/${section.id}/resources`,
         values
       );
-      toast.success("Novo material carregado");
+      toast.success("New Resource uploaded!");
       form.reset();
       router.refresh();
     } catch (err) {
@@ -71,7 +71,7 @@ const ResourceForm = ({ section, courseId }: ResourceFormProps) => {
       await axios.post(
         `/api/courses/${courseId}/sections/${section.id}/resources/${id}`
       );
-      toast.success("Material deletado com sucesso");
+      toast.success("Resource deleted!");
       router.refresh();
     } catch (err) {
       toast.error("Something went wrong!");
@@ -83,26 +83,25 @@ const ResourceForm = ({ section, courseId }: ResourceFormProps) => {
     <>
       <div className="flex gap-2 items-center text-xl font-bold mt-12">
         <PlusCircle />
-        Adicionar materiais (opcional)
+        Add Resources (optional)
       </div>
 
       <p className="text-sm font-medium mt-2">
-        Adicione materiais ao módulo para melhorar o aprendizado dos
-        colaboradores.
+        Add resources to this section to help students learn better.
       </p>
 
       <div className="mt-5 flex flex-col gap-5">
         {section.resources.map((resource) => (
           <div
             key={resource.id}
-            className="flex justify-between bg-[#ebf5ff] rounded-lg text-sm font-medium p-3"
+            className="flex justify-between bg-[#FFF8EB] rounded-lg text-sm font-medium p-3"
           >
             <div className="flex items-center">
               <File className="h-4 w-4 mr-4" />
               {resource.name}
             </div>
             <button
-              className="text-[#043c6c]"
+              className="text-[#FDAB04]"
               disabled={isSubmitting}
               onClick={() => onDelete(resource.id)}
             >
@@ -125,12 +124,9 @@ const ResourceForm = ({ section, courseId }: ResourceFormProps) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nome do material</FormLabel>
+                  <FormLabel>File Name</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Ex: Material de apoio, slides, ebook, vídeo complementar, ..."
-                      {...field}
-                    />
+                    <Input placeholder="Ex: Textbook" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -142,7 +138,7 @@ const ResourceForm = ({ section, courseId }: ResourceFormProps) => {
               name="fileUrl"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Selecione o arquivo</FormLabel>
+                  <FormLabel>Upload File</FormLabel>
                   <FormControl>
                     <FileUpload
                       value={field.value || ""}
@@ -160,7 +156,7 @@ const ResourceForm = ({ section, courseId }: ResourceFormProps) => {
               {isSubmitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                "Carregar material"
+                "Upload"
               )}
             </Button>
           </form>

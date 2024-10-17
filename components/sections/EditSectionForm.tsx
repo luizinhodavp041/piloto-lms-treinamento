@@ -31,7 +31,7 @@ import PublishButton from "@/components/custom/PublishButton";
 
 const formSchema = z.object({
   title: z.string().min(2, {
-    message: "O título é obrigatório e deve ter pelo menos 2 caracteres",
+    message: "Title is required and must be at least 2 characters long",
   }),
   description: z.string().optional(),
   videoUrl: z.string().optional(),
@@ -71,7 +71,7 @@ const EditSectionForm = ({
         `/api/courses/${courseId}/sections/${section.id}`,
         values
       );
-      toast.success("Módulo atualizado");
+      toast.success("Section Updated");
       router.refresh();
     } catch (err) {
       console.log("Failed to update the section", err);
@@ -85,7 +85,7 @@ const EditSectionForm = ({
         <Link href={`/instructor/courses/${courseId}/sections`}>
           <Button variant="outline" className="text-sm font-medium">
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Voltar aos módulos
+            Back to curriculum
           </Button>
         </Link>
 
@@ -101,11 +101,10 @@ const EditSectionForm = ({
         </div>
       </div>
 
-      <h1 className="text-xl font-bold">Detalhes do módulo</h1>
+      <h1 className="text-xl font-bold">Section Details</h1>
       <p className="text-sm font-medium mt-2">
-        Complete este módulo com informações detalhadas, vídeos de qualidade e
-        recursos para oferecer aos colaboradores a melhor experiência de
-        aprendizado
+        Complete this section with detailed information, good video and
+        resources to give your students the best learning experience
       </p>
 
       <Form {...form}>
@@ -116,10 +115,13 @@ const EditSectionForm = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  Título <span className="text-red-500">*</span>
+                  Title <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Ex: Direção Defensiva" {...field} />
+                  <Input
+                    placeholder="Ex: Introduction to Web Development"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -132,11 +134,11 @@ const EditSectionForm = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  Descrição <span className="text-red-500">*</span>
+                  Description <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
                   <RichEditor
-                    placeholder="Sobre o que é esse módulo"
+                    placeholder="What is this section about?"
                     {...field}
                   />
                 </FormControl>
@@ -159,7 +161,7 @@ const EditSectionForm = ({
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>
-                  Vídeo <span className="text-red-500">*</span>
+                  Video <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
                   <FileUpload
@@ -180,9 +182,9 @@ const EditSectionForm = ({
             render={({ field }) => (
               <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                 <div className="space-y-0.5">
-                  <FormLabel>Grátis</FormLabel>
+                  <FormLabel>Accessibility</FormLabel>
                   <FormDescription>
-                    Qualquer um pode acessar esse módulo sem pagar nada
+                    Everyone can access this section for FREE
                   </FormDescription>
                 </div>
                 <FormControl>
@@ -198,14 +200,14 @@ const EditSectionForm = ({
           <div className="flex gap-5">
             <Link href={`/instructor/courses/${courseId}/sections`}>
               <Button variant="outline" type="button">
-                Cancelar
+                Cancel
               </Button>
             </Link>
             <Button type="submit" disabled={!isValid || isSubmitting}>
               {isSubmitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
-                "Salvar"
+                "Save"
               )}
             </Button>
           </div>
